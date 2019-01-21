@@ -89,4 +89,4 @@ input
 
 ## 展示
 
-![textarea](https://raw.githubusercontent.com/LingHanChuJian/textarea-vue/master/public/textarea.gif)
+![textarea](https://github.com/LingHanChuJian/textarea-vue/blob/master/public/textarea.gif)
