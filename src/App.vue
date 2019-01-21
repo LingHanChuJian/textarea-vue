@@ -1,26 +1,31 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+  div#app
+    textarea-vue.auto(v-model="price" v-particle="{shape:'square',shock:false,colorful:false}")
+    input(v-particle)
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+  name: "app",
+  data: () => ({
+    price: ""
+  }),
+  methods: {},
+  components: {}
+};
 </script>
+
 <style lang="stylus">
 #app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+  margin 10px auto
+  max-width 800px
+  height auto
+
+.auto
+  margin-top 80px
+
+input
+  margin-top 20px
+  outline none
+  border 1px solid #DDDDDD
 </style>

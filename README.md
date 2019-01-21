@@ -1,29 +1,92 @@
-# textarea-vue
+## 关于textarea-vue二三事
 
-## Project setup
+1. 自适应文本框 参考资料[NEIL JENKINS](https://alistapart.com/article/expanding-text-areas-made-elegant)
+
+2. 全局自定义指令 v-particle 文本框输入粒子效果
+
+## 食用方法
 ```
-yarn install
+yarn add textarea-vue
+```
+```
+import textarea_vue from 'textarea-vue'
+Vue.use(textarea_vue)
+```
+```
+<template lang="pug">
+  div#app
+    textarea-vue.auto(v-model="price" v-particle="{shape:'square',shock:false,colorful:false}")
+    input(v-particle)
+</template>
+
+<script>
+export default {
+  name: "app",
+  data: () => ({
+    price: ""
+  }),
+  methods: {},
+  components: {}
+};
+</script>
+
+<style lang="stylus">
+#app
+  margin 10px auto
+  max-width 800px
+  height auto
+
+.auto
+  margin-top 80px
+
+input
+  margin-top 20px
+  outline none
+  border 1px solid #DDDDDD
+</style>
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+# API
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+## textarea-vue
 
-### Run your tests
-```
-yarn run test
-```
+#### `:minHeight` 最小高度
+> 默认 180px
 
-### Lints and fixes files
-```
-yarn run lint
-```
+#### `:fontSize` 字体大小
+> 默认 16px
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### `:lineHeight` 行高
+> 默认 18px
+
+#### `:border`  边框
+> 默认 true
+
+#### `:autofocus` 聚焦
+> 默认 false
+
+#### `:disabled` 禁用
+> 默认 false
+
+#### `:placeholder` 描述
+> 默认 ''
+
+#### `:title` 展示信息
+> 默认 ''
+
+#### `v-model` 模板
+
+## v-particle 
+
+#### `shape` 粒子形状  'square'  'circle'
+> 默认 square
+
+#### `shock` 震动
+> 默认 false
+
+#### `colorful` 单次粒子颜色
+> 默认 false
+
+## 展示
+
+![textarea](https://raw.githubusercontent.com/LingHanChuJian/textarea-vue/master/public/textarea.gif)
