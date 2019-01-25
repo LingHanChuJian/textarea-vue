@@ -4,9 +4,9 @@ class particles {
         this.instance = null
         this.el = null
         this.elArr = []
-        this.shock = null      // 是否震动
+        this.shock = false      // 是否震动
         this.color = null
-        this.colorful = null   // 每个粒子颜色是否一样
+        this.colorful = false   // 每个粒子颜色是否一样
         this.canvas = document.createElement('canvas')
         this.cxt = this.canvas.getContext('2d')
         /**
@@ -21,6 +21,7 @@ class particles {
         this.height = 3
         this.radius = 2
         this.particleShape = null
+        this.particleNum = 0
         this.particleArr = []
 
         this.init()
@@ -93,14 +94,13 @@ class particles {
 
     createPartocleParam() {
         this.color = null
-        let num = 0
-        let particleNum = 10 + Math.round(this.random(10))
-        while (particleNum--) {
+        let num = 10 + Math.round(this.random(10))
+        while (num--) {
             let position = this.getPosition()
             position.alpha = 1
             position.velocity = { x: -1 + Math.random() * 2, y: -3.5 + Math.random() * 2 }
-            this.particleArr[num] = position
-            num++
+            this.particleArr[this.particleNum] = position
+            this.particleNum = (this.particleNum + 1) % 500
         }
         if (this.shock) {
             let range = this.random(3, 1)
@@ -137,8 +137,8 @@ class particles {
             divStyle.wordWrap = 'break-word'
         cssStyle.forEach(item => { divStyle[item] = elStyle[item] })
         if (window.mozInnerScreenX) {
-            let height = elStyle.height ? elStyle.height : 0
-            if (this.el.scrollHeight > parseInt(height))
+            let height = elStyle.height ? elStyle.height.replace('px','') : 0
+            if (this.el.scrollHeight > Number(height))
                 divStyle.overflowY = 'scroll'
         } else {
             divStyle.overflow = 'hidden'
@@ -149,9 +149,9 @@ class particles {
         let span = document.createElement('span')
         span.textContent = this.el.value.substring(this.el.selectionStart) || '.'
         div.appendChild(span)
-        let borderTopWidth = elStyle.borderTopWidth ? elStyle.borderTopWidth : 0
-        let borderLeftWidth = elStyle.borderTopWidth ? elStyle.borderTopWidth : 0
-        let result = { top: span.offsetTop + parseInt(borderTopWidth), left: span.offsetLeft + parseInt(borderLeftWidth) }
+        let borderTopWidth = elStyle.borderTopWidth ? elStyle.borderTopWidth.replace('px','') : 0
+        let borderLeftWidth = elStyle.borderTopWidth ? elStyle.borderTopWidth.replace('px','') : 0
+        let result = { top: span.offsetTop + Number(borderTopWidth), left: span.offsetLeft + Number(borderLeftWidth) }
         document.body.removeChild(div)
         return result
     }
