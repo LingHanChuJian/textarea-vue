@@ -9,8 +9,8 @@
 yarn add textarea-vue
 ```
 ```
-import textarea_vue from 'textarea-vue'
-Vue.use(textarea_vue)
+import autoTextarea from '@/components/index'
+Vue.use(autoTextarea)
 ```
 ```
 <template lang="pug">

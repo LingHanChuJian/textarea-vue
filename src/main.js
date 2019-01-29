@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import textareaVue from '@/components/index'
+import autoTextarea from '@/components/index'
 
 Vue.config.productionTip = false
 
-Vue.use(textareaVue)
+Vue.use(autoTextarea)
 
 new Vue({
   render: function (h) { return h(App) },
