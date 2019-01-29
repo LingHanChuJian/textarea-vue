@@ -9,7 +9,7 @@
 yarn add textarea-vue
 ```
 ```
-import autoTextarea from '@/components/index'
+import autoTextarea from 'textarea-vue'
 Vue.use(autoTextarea)
 ```
 ```
