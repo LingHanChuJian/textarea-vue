@@ -5,10 +5,7 @@ const particleVue = {
     install(Vue) {
         Vue.directive('particle', {
             bind(el, binding) {
-                let param = {}
-                if (binding.hasOwnProperty('value'))
-                    param = binding.value
-                particle.getInstance(el, param.shape, param.shock, param.colorful)
+                particle.getInstance(el, Object.assign({ shape:'square', shock:false, colorful:false }, binding.value))
             }
         })
     }

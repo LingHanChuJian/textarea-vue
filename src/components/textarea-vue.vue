@@ -1,9 +1,9 @@
 <template lang="pug">
   div.auto-textarea-div(:style="{ minHeight }")
-    pre.auto-textarea-pre(:style="{ fontSize, lineHeight }")
+    pre.auto-textarea-pre(:style="getTextareaStyle()")
       span {{ value }}
       br 
-    textarea.auto-textarea-vue(:id="ID" :value="value" :style="{ fontSize, lineHeight }" :placeholder="placeholder" :autofocus="autofocus" :disabled="disabled" :title="title" :class="{'no-border': !border}" v-on="textareaListeners")
+    textarea.auto-textarea-vue(:id="ID" :value="value" :style="getTextareaStyle()" :placeholder="placeholder" :autofocus="autofocus" :disabled="disabled" :title="title" :class="{'no-border': !border}" v-on="textareaListeners")
 </template>
 
 <script>
@@ -26,13 +26,9 @@ export default {
       type: Boolean,
       default: false
     },
-    fontSize: {
-      type: String,
-      default: '16px'
-    },
-    lineHeight: {
-      type: String,
-      default: '18px'
+    textareaStyle: {
+      type: Object,
+      default: ()=>({})
     },
     border: {
       type: Boolean,
@@ -49,6 +45,11 @@ export default {
     value: {
       type: [String, Number],
       default: ''
+    }
+  },
+  methods:{
+    getTextareaStyle() {
+      return Object.assign({ fontSize:'16px', lineHeight:'18px' }, this.textareaStyle)
     }
   },
   computed: {

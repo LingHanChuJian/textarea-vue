@@ -27,7 +27,7 @@ class particles {
         this.init()
     }
 
-    static getInstance(el, shape = 'square', shock = false, colorful = false) {
+    static getInstance(el, param) {
         if (!this.instance)
             this.instance = new particles()
         if (this.instance.isEl(el)) {
@@ -37,9 +37,9 @@ class particles {
             let inputArr = this.instance.nodelistToArray(el.querySelectorAll('input'))
             this.instance.elArr.push.apply(this.instance.elArr, textareaArr.concat(inputArr))
         }
-        this.instance.particleShape = shape
-        this.instance.shock = shock
-        this.instance.colorful = colorful
+        this.instance.particleShape = param.shape
+        this.instance.shock = param.shock
+        this.instance.colorful = param.colorful
         this.instance.listener()
         return this.instance
     }

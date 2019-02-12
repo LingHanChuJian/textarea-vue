@@ -15,7 +15,7 @@ Vue.use(autoTextarea)
 ```
 <template lang="pug">
   div#app
-    textarea-vue.auto(v-model="price" v-particle="{shape:'square',shock:false,colorful:false}")
+    textarea-vue.auto(v-model="price" :textareaStyle="textareaStyle" v-particle="{shape:'square',shock:false,colorful:false}")
     input(v-particle)
 </template>
 
@@ -23,7 +23,10 @@ Vue.use(autoTextarea)
 export default {
   name: "app",
   data: () => ({
-    price: ""
+    price: "",
+    textareaStyle: {
+      background: 'url(bg.png) right center / contain no-repeat'
+    }
   }),
   methods: {},
   components: {}
@@ -56,11 +59,8 @@ input
 #### `:minHeight` 最小高度
 > 默认 180px
 
-#### `:fontSize` 字体大小
-> 默认 16px
-
-#### `:lineHeight` 行高
-> 默认 18px
+#### `:textareaStyle` 样式
+> 默认 {fontSize:'16px', lineHeight: '18px'}
 
 #### `:border`  边框
 > 默认 true
