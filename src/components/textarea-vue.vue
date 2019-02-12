@@ -3,13 +3,17 @@
     pre.auto-textarea-pre(:style="{ fontSize, lineHeight }")
       span {{ value }}
       br 
-    textarea.auto-textarea-vue(:value="value" :style="{ fontSize, lineHeight }" :placeholder="placeholder" :autofocus="autofocus" :disabled="disabled" :title="title" :class="{'no-border': !border}" v-on="textareaListeners")
+    textarea.auto-textarea-vue(:id="ID" :value="value" :style="{ fontSize, lineHeight }" :placeholder="placeholder" :autofocus="autofocus" :disabled="disabled" :title="title" :class="{'no-border': !border}" v-on="textareaListeners")
 </template>
 
 <script>
 export default {
   name: 'textarea-vue',
   props: {
+    ID: {
+      type: String,
+      default: ''
+    },
     placeholder: {
       type: String,
       default: ''

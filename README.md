@@ -50,6 +50,9 @@ input
 
 ## textarea-vue
 
+#### `:ID` id
+> 默认 ''
+
 #### `:minHeight` 最小高度
 > 默认 180px
 
