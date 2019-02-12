@@ -28,7 +28,7 @@ export default {
     },
     textareaStyle: {
       type: Object,
-      default: ()=>({})
+      default: () => { return {} }
     },
     border: {
       type: Boolean,
