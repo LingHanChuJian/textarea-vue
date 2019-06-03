@@ -7,6 +7,7 @@ class particles {
         this.shock = false      // 是否震动
         this.color = null
         this.colorful = false   // 每个粒子颜色是否一样
+        this.rendering = false
         this.canvas = document.createElement('canvas')
         this.cxt = this.canvas.getContext('2d')
         /**
@@ -63,10 +64,11 @@ class particles {
                 this.elArr[i].addEventListener('input', () => this.createPartocleParam())
             }
         }
-        requestAnimationFrame(() => this.createPartocle())
     }
 
     createPartocle() {
+        this.rendering = true
+        let rendered  = false
         this.cxt.clearRect(0, 0, this.canvas.width, this.canvas.height)
         for (let i = 0, len = this.particleArr.length; i < len; i++) {
             let item = this.particleArr[i]
@@ -88,8 +90,13 @@ class particles {
                     this.cxt.fill()
                     break
             }
+            rendered = true
         }
-        requestAnimationFrame(() => this.createPartocle())
+        if(rendered){
+            requestAnimationFrame(() => this.createPartocle())
+        }else{
+            this.rendering = false
+        }
     }
 
     createPartocleParam() {
@@ -98,7 +105,7 @@ class particles {
         while (num--) {
             let position = this.getPosition()
             position.alpha = 1
-            position.velocity = { x: -1 + Math.random() * 2 , y: -3.5 + Math.random() * 2 }
+            position.velocity = { x: -1 + Math.random() * 2, y: -3.5 + Math.random() * 2 }
             this.particleArr[this.particleNum] = position
             this.particleNum = (this.particleNum + 1) % 500
         }
@@ -113,6 +120,8 @@ class particles {
                 document.body.style.marginRight = ''
             }, 75)
         }
+        if (!this.rendering)
+            requestAnimationFrame(() => this.createPartocle())
     }
 
     getPosition() {
