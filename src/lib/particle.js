@@ -68,7 +68,6 @@ class particles {
 
     createPartocle() {
         this.cxt.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        let rect = this.canvas.getBoundingClientRect()
         for (let i = 0, len = this.particleArr.length; i < len; i++) {
             let item = this.particleArr[i]
             if (item.alpha <= 0.1)
@@ -81,11 +80,11 @@ class particles {
             this.cxt.fillStyle = item.color
             switch (this.particleShape) {
                 case 'square':
-                    this.cxt.fillRect(Math.round(item.x - 1.5) - rect.left, Math.round(item.y - 1.5) - rect.top, this.width, this.height)
+                    this.cxt.fillRect(Math.round(item.x - 1.5), Math.round(item.y - 1.5), this.width, this.height)
                     break
                 case 'circle':
                     this.cxt.beginPath()
-                    this.cxt.arc(Math.round(item.x - 1.5) - rect.left, Math.round(item.y - 1.5) - rect.top, this.radius, 0, Math.PI * 2)
+                    this.cxt.arc(Math.round(item.x - 1.5), Math.round(item.y - 1.5), this.radius, 0, Math.PI * 2)
                     this.cxt.fill()
                     break
             }

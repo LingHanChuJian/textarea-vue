@@ -96,6 +96,10 @@ export default {
   resize none
   position absolute
   overflow hidden
+  &::placeholder
+    opacity 1
+    font-size 14px
+    color #535a63
 
 .auto-textarea-pre
   visibility hidden
