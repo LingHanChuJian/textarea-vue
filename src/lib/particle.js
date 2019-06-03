@@ -50,7 +50,6 @@ class particles {
         this.canvas.height = window.innerHeight
         this.canvas.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:999999'
         document.body.appendChild(this.canvas)
-        requestAnimationFrame(() => this.createPartocle())
         window.addEventListener('resize', () => {
             this.canvas.width = window.innerWidth
             this.canvas.height = window.innerHeight
@@ -64,14 +63,15 @@ class particles {
                 this.elArr[i].addEventListener('input', () => this.createPartocleParam())
             }
         }
+        requestAnimationFrame(() => this.createPartocle())
     }
 
     createPartocle() {
-        requestAnimationFrame(() => this.createPartocle())
         this.cxt.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        let rect = this.canvas.getBoundingClientRect()
         for (let i = 0, len = this.particleArr.length; i < len; i++) {
             let item = this.particleArr[i]
-            if (item.alpha <= 0.2)
+            if (item.alpha <= 0.1)
                 continue
             item.velocity.y += 0.075
             item.x += item.velocity.x
@@ -81,15 +81,16 @@ class particles {
             this.cxt.fillStyle = item.color
             switch (this.particleShape) {
                 case 'square':
-                    this.cxt.fillRect(Math.round(item.x - 1.5), Math.round(item.y - 1.5), this.width, this.height)
+                    this.cxt.fillRect(Math.round(item.x - 1.5) - rect.left, Math.round(item.y - 1.5) - rect.top, this.width, this.height)
                     break
                 case 'circle':
                     this.cxt.beginPath()
-                    this.cxt.arc(Math.round(item.x - 1.5), Math.round(item.y - 1.5), this.radius, 0, Math.PI * 2)
+                    this.cxt.arc(Math.round(item.x - 1.5) - rect.left, Math.round(item.y - 1.5) - rect.top, this.radius, 0, Math.PI * 2)
                     this.cxt.fill()
                     break
             }
         }
+        requestAnimationFrame(() => this.createPartocle())
     }
 
     createPartocleParam() {
@@ -98,7 +99,7 @@ class particles {
         while (num--) {
             let position = this.getPosition()
             position.alpha = 1
-            position.velocity = { x: -1 + Math.random() * 2, y: -3.5 + Math.random() * 2 }
+            position.velocity = { x: -1 + Math.random() * 2 , y: -3.5 + Math.random() * 2 }
             this.particleArr[this.particleNum] = position
             this.particleNum = (this.particleNum + 1) % 500
         }
@@ -137,7 +138,7 @@ class particles {
             divStyle.wordWrap = 'break-word'
         cssStyle.forEach(item => { divStyle[item] = elStyle[item] })
         if (window.mozInnerScreenX) {
-            let height = elStyle.height ? elStyle.height.replace('px','') : 0
+            let height = elStyle.height ? elStyle.height.replace('px', '') : 0
             if (this.el.scrollHeight > Number(height))
                 divStyle.overflowY = 'scroll'
         } else {
@@ -149,8 +150,8 @@ class particles {
         let span = document.createElement('span')
         span.textContent = this.el.value.substring(this.el.selectionStart) || '.'
         div.appendChild(span)
-        let borderTopWidth = elStyle.borderTopWidth ? elStyle.borderTopWidth.replace('px','') : 0
-        let borderLeftWidth = elStyle.borderTopWidth ? elStyle.borderTopWidth.replace('px','') : 0
+        let borderTopWidth = elStyle.borderTopWidth ? elStyle.borderTopWidth.replace('px', '') : 0
+        let borderLeftWidth = elStyle.borderTopWidth ? elStyle.borderTopWidth.replace('px', '') : 0
         let result = { top: span.offsetTop + Number(borderTopWidth), left: span.offsetLeft + Number(borderLeftWidth) }
         document.body.removeChild(div)
         return result
@@ -178,8 +179,9 @@ class particles {
 
     getColor() {
         if (this.colorful || !this.color) {
-            let randomNum = this.random(360)
-            this.color = `hsla(${this.random(randomNum + 10, randomNum - 10)}, 100%, ${this.random(80, 50)}%, 1)`
+            // this.color = `#${Math.floor(this.random() * 0xffffff).toString(16).padEnd(6, '0')}`
+            let random = this.random(0, 360)
+            this.color = `hsla(${this.random(random - 10, random + 10)}, 100%, ${this.random(50, 80)}%, 1)`
         }
         return this.color
     }

@@ -1,6 +1,6 @@
 <template lang="pug">
   div#app
-    textarea-vue.auto(v-model="price" :textareaStyle="textareaStyle" v-particle="{shape:'square',shock:false,colorful:false}")
+    textarea-vue.auto(v-model="price" :textareaStyle="textareaStyle" :placeholder="placeholder" v-particle="{shape:'square',shock:false,colorful:false}")
     input(v-particle)
 </template>
 
@@ -9,6 +9,7 @@ export default {
   name: "app",
   data: () => ({
     price: "",
+    placeholder: '在雪域中遇见',
     textareaStyle: {
       background: 'url(bg.png) right center / contain no-repeat'
     }
