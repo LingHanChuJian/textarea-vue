@@ -15,7 +15,7 @@ Vue.use(autoTextarea)
 ```
 <template lang="pug">
   div#app
-    textarea-vue.auto(v-model="price" :textareaStyle="textareaStyle" v-particle="{shape:'square',shock:false,colorful:false}")
+    textarea-vue.auto(v-model="price" :textareaStyle="textareaStyle" :placeholder="placeholder" v-particle="{shape:'square',shock:false,colorful:false}")
     input(v-particle)
 </template>
 
@@ -24,6 +24,7 @@ export default {
   name: "app",
   data: () => ({
     price: "",
+    placeholder: '在雪域中遇见自己...',
     textareaStyle: {
       background: 'url(bg.png) right center / contain no-repeat'
     }
@@ -43,7 +44,7 @@ export default {
   margin-top 80px
 
 input
-  margin-top 20px
+  margin-top 100px
   outline none
   border 1px solid #DDDDDD
 </style>
@@ -67,6 +68,9 @@ input
 
 #### `:autofocus` 聚焦
 > 默认 false
+
+#### `:focusBorderColor` 聚焦后边框颜色
+> 默认 #29d
 
 #### `:disabled` 禁用
 > 默认 false

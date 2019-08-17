@@ -3,7 +3,8 @@
     pre.auto-textarea-pre(:style="getTextareaStyle()")
       span {{ value }}
       br 
-    textarea.auto-textarea-vue(:id="ID" :value="value" :style="getTextareaStyle()" :placeholder="placeholder" :autofocus="autofocus" :disabled="disabled" :title="title" :class="{'no-border': !border}" v-on="textareaListeners")
+    textarea.auto-textarea-vue(:id="ID" :value="value" :style="getTextareaStyle()" :autofocus="autofocus" :disabled="disabled" :title="title" v-on="textareaListeners")
+    label.auto-textarea-label(:style="getLabelStyle()") {{ placeholder }}
 </template>
 
 <script>
@@ -21,6 +22,10 @@ export default {
     autofocus: {
       type: Boolean,
       default: false
+    },
+    focusBorderColor: {
+      type: String,
+      default: '#29d'
     },
     disabled: {
       type: Boolean,
@@ -49,20 +54,53 @@ export default {
   },
   methods:{
     getTextareaStyle() {
-      return Object.assign({ fontSize:'16px', lineHeight:'18px' }, this.textareaStyle)
+      return Object.assign({ fontSize:'16px', lineHeight:'18px' ,'no-border': !this.border}, this.textareaStyle)
+    },
+    getTextareaPropertyStyle(el, property) {
+      const style = getComputedStyle(el)[property]
+      return style ? style : ''
+    },
+    getLabelStyle() {
+      const curTextareaStyle = this.getTextareaStyle()
+      const padding = curTextareaStyle.hasOwnProperty('padding') ? curTextareaStyle['padding'] : '20px'
+      return { padding }
     }
   },
   computed: {
     textareaListeners() {
-      let vm = this
-      return Object.assign({}, this.$listeners, {
+      const vm = this
+      const curTextareaStyle = vm.getTextareaStyle()
+      const textareaBoderColor = curTextareaStyle.hasOwnProperty('borderColor') ? curTextareaStyle['borderColor'] : '#DDDDDD'
+      return Object.assign({}, vm.$listeners, {
           input(event) {
               vm.$emit('input', event.target.value, event)
           },
           blur(event) {
+              const textareaEl = document.querySelector('.auto-textarea-vue')
+              const textareaLabel = document.querySelector('.auto-textarea-label')
+              const paddingTop = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingTop').replace('px', ''))
+              const paddingLeft = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingLeft').replace('px', ''))
+              textareaEl.style.borderColor = textareaBoderColor
+              textareaLabel.style.backgroundColor = 'transparent'
+              textareaLabel.style.color = '#535a63'
+              textareaLabel.style.padding = '0'
+              textareaLabel.style.top = `${paddingTop}px`
+              textareaLabel.style.left = `${paddingLeft}px`
+              textareaLabel.style.transform = `scale(1)`
               vm.$emit('blur', event.target.value, event)
           },
           focus(event) {
+              const textareaEl = document.querySelector('.auto-textarea-vue')
+              const textareaLabel = document.querySelector('.auto-textarea-label')
+              const paddingLeft = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingLeft').replace('px', ''))
+              textareaEl.style.borderColor = vm.focusBorderColor
+              textareaLabel.style.backgroundColor = vm.focusBorderColor
+              textareaLabel.style.color = '#FFFFFF'
+              textareaLabel.style.padding = '0 2px'
+              textareaLabel.style.top = `-8px`
+              textareaLabel.style.left = `${Math.floor(paddingLeft * .85) - 4}px`
+              textareaLabel.style.borderRadius = '3px'
+              textareaLabel.style.transform = `scale(.85)`
               vm.$emit('focus', event)
           }
       })
@@ -81,12 +119,13 @@ export default {
   border-radius 5px
   font inherit
   border 1px solid #DDDDDD
-  padding 8px
+  padding 20px
   outline none
   white-space pre-wrap
   word-wrap break-word
   &:focus
     border 1px solid #DDDDDD
+    transition border-color .25s
 
 .auto-textarea-vue
   top 0
@@ -100,6 +139,13 @@ export default {
     opacity 1
     font-size 14px
     color #535a63
+
+.auto-textarea-label
+  position absolute
+  font-size 14px
+  color #535a63
+  top 0
+  transition all .25s
 
 .auto-textarea-pre
   visibility hidden

@@ -9,7 +9,7 @@ export default {
   name: "app",
   data: () => ({
     price: "",
-    placeholder: '在雪域中遇见',
+    placeholder: '在雪域中遇见自己...',
     textareaStyle: {
       background: 'url(bg.png) right center / contain no-repeat'
     }
@@ -29,7 +29,7 @@ export default {
   margin-top 80px
 
 input
-  margin-top 20px
+  margin-top 100px
   outline none
   border 1px solid #DDDDDD
 </style>
