@@ -76,8 +76,8 @@ export default {
               vm.$emit('input', event.target.value, event)
           },
           blur(event) {
-              const textareaEl = document.querySelector('.auto-textarea-vue')
-              const textareaLabel = document.querySelector('.auto-textarea-label')
+              const textareaEl = event.target
+              const textareaLabel = textareaEl.nextElementSibling
               const paddingTop = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingTop').replace('px', ''))
               const paddingLeft = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingLeft').replace('px', ''))
               textareaEl.style.borderColor = textareaBoderColor
@@ -90,8 +90,8 @@ export default {
               vm.$emit('blur', event.target.value, event)
           },
           focus(event) {
-              const textareaEl = document.querySelector('.auto-textarea-vue')
-              const textareaLabel = document.querySelector('.auto-textarea-label')
+              const textareaEl = event.target
+              const textareaLabel = textareaEl.nextElementSibling
               const paddingLeft = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingLeft').replace('px', ''))
               textareaEl.style.borderColor = vm.focusBorderColor
               textareaLabel.style.backgroundColor = vm.focusBorderColor
