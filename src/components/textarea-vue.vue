@@ -64,43 +64,36 @@ export default {
       const curTextareaStyle = this.getTextareaStyle()
       const padding = curTextareaStyle.hasOwnProperty('padding') ? curTextareaStyle['padding'] : '20px'
       return { padding }
+    },
+    placeholderEffect(vm, e, name) {
+      const textareaEl = e.target
+      const textareaLabel = textareaEl.nextElementSibling
+      const curTextareaStyle = vm.getTextareaStyle()
+      const paddingTop = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingTop').replace('px', ''))
+      const paddingLeft = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingLeft').replace('px', ''))
+      textareaLabel.style.borderRadius = '3px'
+      textareaLabel.style.padding = name === 'blur' && !e.target.value ? '0' : '0 2px'
+      textareaLabel.style.color = name === 'blur' && !e.target.value ? '#535a63' : '#FFFFFF'
+      textareaLabel.style.top = name === 'blur' && !e.target.value ? `${paddingTop}px` : '-8px'
+      textareaLabel.style.transform = name === 'blur' && !e.target.value ? 'scale(1)' : 'scale(.85)'
+      textareaLabel.style.backgroundColor = name === 'blur' && !e.target.value ? 'transparent': vm.focusBorderColor
+      textareaLabel.style.left = name === 'blur' && !e.target.value ? `${paddingLeft}px`: `${Math.floor(paddingLeft * .85) - 4}px`
+      textareaEl.style.borderColor = name ==='blur' ? (curTextareaStyle.hasOwnProperty('borderColor') ? curTextareaStyle['borderColor'] : '#DDDDDD') : vm.focusBorderColor
     }
   },
   computed: {
     textareaListeners() {
       const vm = this
-      const curTextareaStyle = vm.getTextareaStyle()
-      const textareaBoderColor = curTextareaStyle.hasOwnProperty('borderColor') ? curTextareaStyle['borderColor'] : '#DDDDDD'
       return Object.assign({}, vm.$listeners, {
           input(event) {
               vm.$emit('input', event.target.value, event)
           },
           blur(event) {
-              const textareaEl = event.target
-              const textareaLabel = textareaEl.nextElementSibling
-              const paddingTop = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingTop').replace('px', ''))
-              const paddingLeft = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingLeft').replace('px', ''))
-              textareaEl.style.borderColor = textareaBoderColor
-              textareaLabel.style.backgroundColor = 'transparent'
-              textareaLabel.style.color = '#535a63'
-              textareaLabel.style.padding = '0'
-              textareaLabel.style.top = `${paddingTop}px`
-              textareaLabel.style.left = `${paddingLeft}px`
-              textareaLabel.style.transform = `scale(1)`
+              vm.placeholderEffect(vm, event, 'blur')
               vm.$emit('blur', event.target.value, event)
           },
           focus(event) {
-              const textareaEl = event.target
-              const textareaLabel = textareaEl.nextElementSibling
-              const paddingLeft = Number(vm.getTextareaPropertyStyle(textareaEl, 'paddingLeft').replace('px', ''))
-              textareaEl.style.borderColor = vm.focusBorderColor
-              textareaLabel.style.backgroundColor = vm.focusBorderColor
-              textareaLabel.style.color = '#FFFFFF'
-              textareaLabel.style.padding = '0 2px'
-              textareaLabel.style.top = `-8px`
-              textareaLabel.style.left = `${Math.floor(paddingLeft * .85) - 4}px`
-              textareaLabel.style.borderRadius = '3px'
-              textareaLabel.style.transform = `scale(.85)`
+              vm.placeholderEffect(vm, event, 'focus')
               vm.$emit('focus', event)
           }
       })
